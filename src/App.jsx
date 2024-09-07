@@ -1,33 +1,30 @@
-import {
-  createBrowserRouter,
-  createRoutesFromElements,
-  Link,
-  Outlet,
-  Route,
-  RouterProvider,
-} from 'react-router-dom';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import MainLayout from './layouts/MainLayout';
 import Home from './pages/Home';
+import EventList from './components/EventList';
 import EventDetail from './components/EventDetail';
-import Register from './components/Register';
-import Login from './components/Login';
 import CreateEvent from './components/CreateEvent';
+import Login from './components/Login';
+import Register from './components/Register';
 import UserProfile from './components/UserProfile';
 
-const router = createBrowserRouter(
-  createRoutesFromElements(
-    <Route path="/" element={<MainLayout />}>
-      <Route index element={<Home />} />
-      <Route path="/event/:id" element={<EventDetail />} />
-      <Route path="/register" element={<Register />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/profile" element={<UserProfile />} />
-      <Route path="/createevent" element={<CreateEvent />} />
-    </Route>,
-  ),
-);
+const App = () => {
+  return (
+    <Router>
+      <MainLayout>
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/events' element={<EventList />} />
+          <Route path='/events/:id' element={<EventDetail />} />
+          <Route path='/events/create' element={<CreateEvent />} />
+          <Route path='/profile' element={<UserProfile />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/register' element={<Register />} />
+        </Routes>
+      </MainLayout>
+    </Router>
+  );
+};
 
-const App = () => <RouterProvider router={router} />;
-
-
-export default App
+export default App;

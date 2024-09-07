@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_API_PATH
+const API_URL = import.meta.env.VITE_API_PATH || 'http://localhost:3001';
 
 const apiService = axios.create({
   baseURL: `${API_URL}/api`,
@@ -17,14 +17,16 @@ apiService.interceptors.request.use(
     }
     return config;
   },
-  (error) => Promise.reject(error)
+  (error) => Promise.reject(error),
 );
 
 export const login = (email, password) => apiService.post('/auth/login', { email, password });
-export const register = (name, email, password) => apiService.post('/users', { name, email, password });
+export const register = (name, email, password) =>
+  apiService.post('/users', { name, email, password });
 export const getProfile = () => apiService.get('/auth/profile');
 
-export const getEvents = (page = 1, limit = 10) => apiService.get(`/events?page=${page}&limit=${limit}`);
+export const getEvents = (page = 1, limit = 10) =>
+  apiService.get(`/events?page=${page}&limit=${limit}`);
 export const getEventById = (id) => apiService.get(`/events/${id}`);
 export const createEvent = (eventData) => apiService.post('/events', eventData);
 export const updateEvent = (id, eventData) => apiService.put(`/events/${id}`, eventData);
