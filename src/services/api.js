@@ -21,8 +21,8 @@ apiService.interceptors.request.use(
 );
 
 export const login = (email, password) => apiService.post('/auth/login', { email, password });
-export const register = (name, email, password) =>
-  apiService.post('/users', { name, email, password });
+export const register = (email, password) =>
+  apiService.post('/users', { email, password });
 export const getProfile = () => apiService.get('/auth/profile');
 
 export const getEvents = (page = 1, limit = 10) =>

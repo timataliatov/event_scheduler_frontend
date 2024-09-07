@@ -5,7 +5,6 @@ import { register } from '../services/api';
 const Register = () => {
   // State for form data and error handling
   const [formData, setFormData] = useState({
-    name: '',
     email: '',
     password: '',
   });
@@ -23,7 +22,7 @@ const Register = () => {
     setError('');
     try {
       // Send registration request to API
-      await register(formData.name, formData.email, formData.password);
+      await register(formData.email, formData.password);
       // Navigate to login page after successful registration
       navigate('/login');
     } catch (err) {
