@@ -38,19 +38,6 @@ const Register = () => {
       <h2 className='text-3xl font-bold mb-6 text-center'>Register</h2>
       {error && <p className="text-red-500 mb-4">{error}</p>}
       <form onSubmit={handleSubmit} className='space-y-4'>
-        {/* Name input field */}
-        <div>
-          <label htmlFor='name' className='block mb-1 font-medium'>
-            Name
-          </label>
-          <input
-            type='text'
-            id='name'
-            className='input input-bordered w-full'
-            onChange={handleChange}
-            required
-          />
-        </div>
         {/* Email input field */}
         <div>
           <label htmlFor='email' className='block mb-1 font-medium'>
