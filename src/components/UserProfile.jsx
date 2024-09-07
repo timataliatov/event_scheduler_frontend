@@ -1,32 +1,44 @@
-import React from 'react';
-import { User, Mail, Calendar } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { getProfile } from '../services/api';
 
 const UserProfile = () => {
+  // State for profile data and error handling
+  const [profile, setProfile] = useState(null);
+  const [error, setError] = useState('');
+
+  // Effect to fetch profile data when comopnent mounts
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        // Get profile data from API
+        const response = await getProfile();
+        setProfile(response.data);
+      } catch (err) {
+        // Set error message if profile fetch fails
+        setError(err.message || 'Failed to load profile');
+      }
+    };
+
+    fetchProfile();
+  }, []);
+
+  // Display error message if an error occurred
+  if (error) {
+    return <p className="text-red-500">{error}</p>;
+  }
+
+  // Display loading indicator while profile data is being fetched
+  if (!profile) {
+    return <p>Loading profile...</p>;
+  }
+
+  // Render profile view
   return (
-    <div className='max-w-md mx-auto'>
-      <h2 className='text-3xl font-bold mb-6 text-center'>Your Profile</h2>
-      <div className='bg-white shadow-md rounded-lg p-6'>
-        <div className='flex items-center mb-4'>
-          <User className='mr-4' />
-          <div>
-            <p className='text-sm text-gray-600'>Name</p>
-            <p className='font-medium'>User Name</p>
-          </div>
-        </div>
-        <div className='flex items-center mb-4'>
-          <Mail className='mr-4' />
-          <div>
-            <p className='text-sm text-gray-600'>Email</p>
-            <p className='font-medium'>user@example.com</p>
-          </div>
-        </div>
-        <div className='flex items-center'>
-          <Calendar className='mr-4' />
-          <div>
-            <p className='text-sm text-gray-600'>Joined</p>
-            <p className='font-medium'>01/01/2020</p>
-          </div>
-        </div>
+    <div className='max-w-md mx-auto mt-12'>
+      <h2 className='text-3xl font-bold mb-6 text-center'>User Profile</h2>
+      <div className='space-y-4'>
+        <p><strong>Name:</strong> {profile.name}</p>
+        <p><strong>Email:</strong> {profile.email}</p>
       </div>
     </div>
   );
