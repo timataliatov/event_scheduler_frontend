@@ -7,3 +7,12 @@
 body {
   font-family: 'Poppins', sans-serif;
 }
+
+.map-container {
+  height: 500px; /* Adjust the height as needed */
+  width: 100%;   /* Ensure it fills the container horizontally */
+  border-radius: 8px; /* Optional: Add rounded corners */
+  overflow: hidden; /* Ensures content doesn't overflow the container */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Add a shadow for better appearance */
+  margin-bottom: 2rem; /* Space below the map */
+}
