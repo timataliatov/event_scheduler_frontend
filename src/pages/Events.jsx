@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { getEvents } from '../services/api';
 import EventList from '../components/EventList';
 import SearchBar from '../components/SearchBar';
+import EventMap from '../components/EventMap';
 
 const Events = () => {
   const [events, setEvents] = useState([]);
@@ -43,9 +44,12 @@ const Events = () => {
       <h1 className='text-3xl font-bold mb-8'>Upcoming Events</h1>
       <div className='mb-8'>
         <SearchBar events={events} setEvents={setEvents} />
-        </div>
-        {/* <FilterOptions /> */}
-      <EventList events={events}/>
+      </div>
+      <div className='map-container'>
+        <EventMap events={events} />
+      </div>
+      {/* <FilterOptions /> */}
+      <EventList events={events} />
       {hasMore && (
         <div className='text-center mt-8'>
           <button onClick={loadMore} className='btn btn-primary'>
