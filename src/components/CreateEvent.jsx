@@ -9,12 +9,7 @@ const CreateEvent = () => {
           <label className='label' htmlFor='title'>
             <span className='label-text'>Title</span>
           </label>
-          <input
-            type='text'
-            id='title'
-            name='title'
-            className='input input-bordered w-full'
-          />
+          <input type='text' id='title' name='title' className='input input-bordered w-full' />
         </div>
         <div>
           <label className='label' htmlFor='description'>
@@ -48,35 +43,7 @@ const CreateEvent = () => {
             className='input input-bordered w-full'
           />
         </div>
-        <div className='grid grid-cols-2 gap-4'>
-          <div>
-            <label className='label' htmlFor='latitude'>
-              <span className='label-text'>Latitude</span>
-            </label>
-            <input
-              type='number'
-              id='latitude'
-              name='latitude'
-              step='any'
-              className='input input-bordered w-full'
-            />
-          </div>
-          <div>
-            <label className='label' htmlFor='longitude'>
-              <span className='label-text'>Longitude</span>
-            </label>
-            <input
-              type='number'
-              id='longitude'
-              name='longitude'
-              step='any'
-              className='input input-bordered w-full'
-            />
-          </div>
-        </div>
-        <button className='btn btn-primary w-full'>
-          Create Event
-        </button>
+        <button className='btn btn-primary w-full'>Create Event</button>
       </div>
     </div>
   );
