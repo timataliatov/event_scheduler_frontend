@@ -1,24 +1,21 @@
-import {useEffect, useState} from 'react'
+import {useState} from 'react'
 import { Search } from 'lucide-react';
 
 const SearchBar = ({events, setEvents}) => {
     const [query, setQuery] = useState('');
-    // const [results, setResults] = useState([])
 
     const handleSubmit = (e) => {
-        e.preventDefault();
-        if (query) {
-          const filtered = events.filter((event) => {
-              event.title.toLowerCase().includes(query.toLowerCase()) ||
-              event.description.toLowerCase().includes(query.toLowerCase())
-          })
-          console.log(filtered)
-          setEvents(filtered)
+      e.preventDefault();
+      if (query.length > 0) {
+        const filtered = events.filter((event) => 
+          event.title.toLowerCase().includes(query.toLowerCase()) ||
+          event.description.toLowerCase().includes(query.toLowerCase())
+        );
+        setEvents(filtered);
       } else {
-          setEvents([])
+        setEvents([]);
       }
-      console.log(events)
-    }
+    };
 
   return (
     <form className='relative' onSubmit={handleSubmit}>
