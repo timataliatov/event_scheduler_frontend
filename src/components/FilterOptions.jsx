@@ -1,6 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-const FilterOptions = () => {
+const FilterOptions = ({events, setEvents}) => {
+    const [startDate, setStartDate] = useState('');
+    const [endDate, setEndDate] = useState('');
+    const [location, setLocation] = useState('');
+
+    
+
   return (
     <form className='space-y-4 mt-4'>
       <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>

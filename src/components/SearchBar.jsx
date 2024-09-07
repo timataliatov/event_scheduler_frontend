@@ -15,10 +15,11 @@ const SearchBar = ({events, setEvents}) => {
         } else {
             setResults([])
         }
-    }, [query])
+    }, [query, events])
 
-    const handleClick = () => {
-        
+    const handleClick = (e) => {
+        e.preventDefault();
+        setEvents(results)
     }
 
   return (
@@ -27,8 +28,9 @@ const SearchBar = ({events, setEvents}) => {
         type='text'
         placeholder='Search events...'
         className='input input-bordered w-full pr-10'
+        onChange={() => setQuery(e.target.value)}
       />
-      <button type='submit' className='absolute right-2 top-1/2 transform -translate-y-1/2'>
+      <button type='submit' onClick={(e) => handleClick(e)} className='absolute right-2 top-1/2 transform -translate-y-1/2'>
         <Search size={20} className='text-gray-400' />
       </button>
     </form>
