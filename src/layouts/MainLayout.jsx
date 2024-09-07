@@ -1,17 +1,15 @@
-import React from 'react'
-import Header from '../components/Header'
-import Footer from '../components/Footer'
-import { Outlet } from 'react-router-dom'
+import React from 'react';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 
-const MainLayout = () => {
-    return (
-        <>
-        <Header />
-          <main className="container mx-auto">
-            <Outlet />
-          </main>
-          <Footer />
-        </>
-      );
-    }
-export default MainLayout
+const MainLayout = ({ children }) => {
+  return (
+    <div className='flex flex-col min-h-screen bg-base-100 text-base-content'>
+      <Header />
+      <main className='flex-grow container mx-auto px-4 py-8'>{children}</main>
+      <Footer />
+    </div>
+  );
+};
+
+export default MainLayout;
