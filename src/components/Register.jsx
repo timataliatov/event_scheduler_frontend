@@ -27,7 +27,7 @@ const Register = () => {
       navigate('/login');
     } catch (err) {
       // Set error message if registration fails
-      setError(err.response?.data?.message || 'Registration failed');
+      setError(err.response?.data?.message || 'Registratino failed');
     }
   };
 
