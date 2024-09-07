@@ -1,15 +1,3 @@
-<<<<<<< HEAD
-import React from 'react'
-import SearchBar from '../components/SearchBar'
-
-const Home = () => {
-  return (
-    <>
-    <SearchBar/>
-    </>
-  )
-}
-=======
 import React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -32,6 +20,5 @@ const Home = () => {
     </div>
   );
 };
->>>>>>> main
 
 export default Home;
