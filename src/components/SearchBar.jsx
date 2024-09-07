@@ -20,7 +20,7 @@ const SearchBar = ({events, setEvents}) => {
     const handleClick = () => {
         
     }
-}
+
   return (
     <form className='relative'>
       <input
@@ -33,6 +33,7 @@ const SearchBar = ({events, setEvents}) => {
       </button>
     </form>
   );
+}
 
 
 export default SearchBar;
