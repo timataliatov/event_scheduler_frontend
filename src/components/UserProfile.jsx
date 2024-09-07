@@ -37,7 +37,6 @@ const UserProfile = () => {
     <div className='max-w-md mx-auto mt-12'>
       <h2 className='text-3xl font-bold mb-6 text-center'>User Profile</h2>
       <div className='space-y-4'>
-        <p><strong>Name:</strong> {profile.name}</p>
         <p><strong>Email:</strong> {profile.email}</p>
       </div>
     </div>
