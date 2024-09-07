@@ -8,7 +8,26 @@ const Header = () => {
       <div className='container mx-auto px-4'>
         <nav className='flex items-center justify-between py-4'>
           <Link to='/' className='text-2xl font-bold'>
-            Event Manager
+          <a href='/'>
+            <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 380 170' width='180' height='85'>
+              <path
+                d='M10 100 Q 100 10, 190 100 T 380 100'
+                strokeWidth='20'
+                fill='none'
+                className='stroke-primary'
+              />
+              <text
+                x='190'
+                y='130'
+                fontFamily='Brush Script MT, cursive'
+                fontSize='100'
+                textAnchor='middle'
+                className='fill-accent'
+              >
+                eventify.me
+              </text>
+            </svg>
+          </a>
           </Link>
           <ul className='flex items-center space-x-6'>
             <li>

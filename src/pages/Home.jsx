@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 const Home = () => {
   return (
     <div className='container mx-auto px-4 py-12'>
-      <h1 className='text-4xl font-bold mb-8 text-center'>Welcome to Event Manager</h1>
-      <p className='text-xl text-gray-600 mb-12 text-center max-w-2xl mx-auto'>
+      <h1 className='text-4xl font-bold mb-8 text-center'>Welcome to eventify.me</h1>
+      <p className='text-xl text-gray-500 mb-12 text-center max-w-2xl mx-auto'>
         Discover and create amazing events in your area. Join our community of event enthusiasts
         today!
       </p>
