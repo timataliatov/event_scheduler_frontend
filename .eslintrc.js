@@ -23,6 +23,13 @@ module.exports = {
   rules: {
     'react/react-in-jsx-scope': 'off',
     'react/prop-types': 'off',
+    'react-hooks/rules-of-hooks': 'error',
+    'react-hooks/exhaustive-deps': 'warn',
+    'no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': ['warn'],
+    'no-undef': 'off',
+    'no-prototype-builtins': 'off',
+    'no-use-before-define': 'off',
   },
   settings: {
     react: {
