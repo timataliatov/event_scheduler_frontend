@@ -1,8 +1,13 @@
-import {useState} from 'react'
-import { Search } from 'lucide-react';
+import {useState, useEffect} from 'react'
+import { Search, X } from 'lucide-react';
 
 const SearchBar = ({events, setEvents}) => {
     const [query, setQuery] = useState('');
+    const [initialEvents, setInitialEvents] = useState([]);
+
+    useEffect(() => {
+      setInitialEvents(events);
+    }, []);
 
     const handleSubmit = (e) => {
       e.preventDefault();
@@ -13,8 +18,13 @@ const SearchBar = ({events, setEvents}) => {
         );
         setEvents(filtered);
       } else {
-        setEvents([]);
+        setEvents(initialEvents);
       }
+    };
+
+    const clearSearch = () => {
+      setQuery("");
+      setEvents(initialEvents);
     };
 
   return (
@@ -29,6 +39,7 @@ const SearchBar = ({events, setEvents}) => {
       <button type='submit' className='absolute right-2 top-1/2 transform -translate-y-1/2'>
         <Search size={20} className='text-gray-400' />
       </button>
+      {query && (<button className='absolute right-10 top-1/2 transform -translate-y-1/2' onClick={clearSearch}><X size={20} className='text-gray-400'/></button>)}
     </form>
   );
 }
