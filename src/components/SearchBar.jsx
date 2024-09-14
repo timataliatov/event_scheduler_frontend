@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState} from 'react';
 import { Search, X } from 'lucide-react';
 
 const SearchBar = ({ applySearch, setFilteredEvents }) => {
