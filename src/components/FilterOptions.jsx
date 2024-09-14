@@ -1,22 +1,21 @@
 import React, { useState } from 'react';
 
-const FilterOptions = ({ events, setEvents }) => {
+const FilterOptions = ({ applyFilter, setFilteredEvents }) => {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [location, setLocation] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const filteredEvents = events.filter((event) => {
-      const eventDate = new Date(event.date).toISOString().split('T')[0];
-      return (
-        (!startDate || eventDate >= startDate) &&
-        (!endDate || eventDate <= endDate) &&
-        (!location || event.location.toLowerCase().includes(location.toLowerCase()))
-      );
-    });
-    setEvents(filteredEvents);
+    applyFilter(startDate,endDate,location);
   };
+
+ const clearFilters = () => {
+  setStartDate('');
+  setEndDate('');
+  setLocation('');
+  setFilteredEvents([]);
+ }
 
   return (
     <form onSubmit={handleSubmit} className='space-y-4 mt-4'>
@@ -48,6 +47,9 @@ const FilterOptions = ({ events, setEvents }) => {
           <button type='submit' className='btn btn-secondary w-16'>
             Filter
           </button>
+          {(startDate || endDate || location) && <button onClick={clearFilters} className='btn btn-secondary w-16'>
+            Clear
+          </button>}
         </div>
       </div>
     </form>

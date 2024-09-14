@@ -14,8 +14,9 @@ L.Icon.Default.mergeOptions({
   shadowUrl: markerShadow,
 });
 
-const EventMap = ({ events }) => {
-  const validEvents = events.filter((event) => event.latitude && event.longitude);
+const EventMap = ({ events, filteredEvents }) => {
+  const selectedEvents = filteredEvents.length > 0 ? filteredEvents : events;
+  const validEvents = selectedEvents.filter((event) => event.latitude && event.longitude);
 
   const centerLat = validEvents.length > 0 ? validEvents[0].latitude : 0;
   const centerLng = validEvents.length > 0 ? validEvents[0].longitude : 0;
