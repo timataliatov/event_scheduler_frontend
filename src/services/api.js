@@ -25,8 +25,15 @@ export const register = (email, password) =>
   apiService.post('/users', { email, password });
 export const getProfile = () => apiService.get('/auth/profile');
 
-export const getEvents = (page = 1, limit = 10) =>
-  apiService.get(`/events?page=${page}&limit=${limit}`);
+export const getEvents = async (page = 1, limit = 100) => {
+  try {
+    const response = await apiService.get(`/events?page=${page}&limit=${limit}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching events:', error);
+    throw error;
+  }
+};
 export const getEventById = (id) => apiService.get(`/events/${id}`);
 export const createEvent = (eventData) => apiService.post('/events', eventData);
 export const updateEvent = (id, eventData) => apiService.put(`/events/${id}`, eventData);

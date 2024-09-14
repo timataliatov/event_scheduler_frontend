@@ -59,7 +59,7 @@ const EventDetail = () => {
         </div>
         <div className='flex items-center mb-4'>
           <User className='mr-2' />
-          <span>Organizer ID: {event.organizerId}</span>
+          <span>Organizer: {event.User?.name || 'Unknown'}</span>
         </div>
         <p className='mt-4'>{event.description}</p>
       </div>

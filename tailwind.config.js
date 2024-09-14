@@ -1,3 +1,4 @@
+import typography from '@tailwindcss/typography';
 import daisyui from 'daisyui';
 
 /** @type {import('tailwindcss').Config} */
@@ -10,7 +11,7 @@ export default {
       },
     },
   },
-  plugins: [require('@tailwindcss/typography'), require('daisyui')],
+  plugins: [typography, daisyui],
   daisyui: {
     themes: [
       {
@@ -33,8 +34,6 @@ export default {
           'base-100': '#282a36',
           info: '#8be9fd',
           success: '#50fa7b',
-          warning: '#f1fa8c',
-          error: '#ff5555',
         },
       },
     ],
