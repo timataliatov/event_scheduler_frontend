@@ -9,10 +9,10 @@ const Header = () => {
 
   return (
     <header className='bg-base-100 text-base-content border-b border-base-300 shadow-sm'>
-      <div className='container mx-auto px-4 sm:px-6 lg:px-8'>
-        <nav className='flex items-center justify-between py-4'>
+      <div className='container mx-auto px-4'>
+        <nav className='flex items-center justify-between py-3'>
           <Link to='/' className='flex-shrink-0'>
-            <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 380 170' width='160' height='75' className='transition-transform duration-300 ease-in-out transform hover:scale-105'>
+            <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 380 170' width='140' height='62' className='transition-transform duration-300 ease-in-out transform hover:scale-105'>
               <path
                 d='M10 100 Q 100 10, 190 100 T 380 100'
                 strokeWidth='20'
@@ -23,7 +23,7 @@ const Header = () => {
                 x='190'
                 y='130'
                 fontFamily='Brush Script MT, cursive'
-                fontSize='100'
+                fontSize='90'
                 textAnchor='middle'
                 className='fill-accent'
               >
@@ -32,29 +32,17 @@ const Header = () => {
             </svg>
           </Link>
           <ul className='flex items-center space-x-1 sm:space-x-2 md:space-x-4'>
-            <li>
-              <Link to='/events' className='btn btn-ghost btn-sm rounded-btn text-[15px]'>
-                Events
-              </Link>
-            </li>
-            <li>
-              <Link to='/events/create' className='btn btn-ghost btn-sm rounded-btn text-[15px]'>
-                Create Event
-              </Link>
-            </li>
+            <NavItem to='/events'>Events</NavItem>
+            <NavItem to='/events/create'>Create Event</NavItem>
             {isAuthenticated ? (
               <li>
                 <UserDropdown />
               </li>
             ) : (
               <>
+                <NavItem to='/login'>Login</NavItem>
                 <li>
-                  <Link to='/login' className='btn btn-ghost btn-sm rounded-btn'>
-                    Login
-                  </Link>
-                </li>
-                <li>
-                  <Link to='/register' className='btn btn-primary btn-sm rounded-btn'>
+                  <Link to='/register' className='btn btn-primary btn-sm rounded-btn text-sm'>
                     Register
                   </Link>
                 </li>
@@ -69,5 +57,13 @@ const Header = () => {
     </header>
   );
 };
+
+const NavItem = ({ to, children }) => (
+  <li>
+    <Link to={to} className='btn btn-ghost btn-sm rounded-btn text-sm'>
+      {children}
+    </Link>
+  </li>
+);
 
 export default Header;
