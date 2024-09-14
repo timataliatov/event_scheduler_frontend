@@ -7,19 +7,19 @@ const EventCard = ({ event }) => {
   const eventId = event.source === 'local' ? event.id : event.id.toString();
 
   return (
-    <div className='bg-white border border-gray-200 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300'>
+    <div className='bg-base-100 dark:bg-base-200 border border-base-200 dark:border-base-300 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300'>
       <div className='p-6'>
         <h3 className='text-xl font-semibold mb-2'>{event.title}</h3>
-        <div className='flex items-center text-gray-600 mb-2'>
-          <Calendar size={16} className='mr-2' />
+        <div className='flex items-center text-base-content/70 mb-2'>
+          <Calendar size={16} className='mr-2 text-primary' />
           <p>{new Date(event.date).toLocaleString()}</p>
         </div>
-        <div className='flex items-center text-gray-600 mb-4'>
-          <MapPin size={16} className='mr-2' />
+        <div className='flex items-center text-base-content/70 mb-4'>
+          <MapPin size={16} className='mr-2 text-primary' />
           <p>{event.location}</p>
         </div>
         {event.source === 'local' && (
-          <span className='inline-block bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded'>
+          <span className='inline-block bg-primary/10 text-primary text-xs font-semibold mr-2 px-2.5 py-0.5 rounded'>
             User Created
           </span>
         )}

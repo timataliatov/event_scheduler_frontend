@@ -56,63 +56,65 @@ const EventDetail = () => {
     }
   };
 
-  if (loading) return <div className='text-center'>Loading...</div>;
-  if (error) return <div className='text-center text-error'>{error}</div>;
-  if (!event) return <div className='text-center'>Event not found</div>;
+  if (loading) return <div className='flex-grow flex items-center justify-center'>Loading...</div>;
+  if (error) return <div className='flex-grow flex items-center justify-center text-error'>{error}</div>;
+  if (!event) return <div className='flex-grow flex items-center justify-center'>Event not found</div>;
 
   return (
-    <div className='max-w-2xl mx-auto'>
-      <h1 className='text-3xl font-bold mb-6'>{event.title}</h1>
-      <div className='bg-white shadow-md rounded-lg p-6 mb-6'>
-        <div className='flex items-center mb-4'>
-          <Calendar className='mr-2' />
-          <span>{new Date(event.date).toLocaleDateString()}</span>
-        </div>
-        <div className='flex items-center mb-4'>
-          <Clock className='mr-2' />
-          <span>{new Date(event.date).toLocaleTimeString()}</span>
-        </div>
-        <div className='flex items-center mb-4'>
-          <MapPin className='mr-2' />
-          <span>{event.location}</span>
-        </div>
-        {event.source === 'api' && (
+    <div className='flex-grow flex items-center justify-center py-8'>
+      <div className='max-w-2xl w-full mx-auto px-4'>
+        <h1 className='text-3xl font-bold mb-6'>{event.title}</h1>
+        <div className='bg-base-200 border border-base-300 shadow-md rounded-lg p-6 mb-6'>
           <div className='flex items-center mb-4'>
-            <User className='mr-2' />
-            <span>Organizer: {event.User?.name || 'Unknown'}</span>
+            <Calendar className='mr-2 text-primary' />
+            <span>{new Date(event.date).toLocaleDateString()}</span>
+          </div>
+          <div className='flex items-center mb-4'>
+            <Clock className='mr-2 text-primary' />
+            <span>{new Date(event.date).toLocaleTimeString()}</span>
+          </div>
+          <div className='flex items-center mb-4'>
+            <MapPin className='mr-2 text-primary' />
+            <span>{event.location}</span>
+          </div>
+          {event.source === 'api' && (
+            <div className='flex items-center mb-4'>
+              <User className='mr-2 text-primary' />
+              <span>Organizer: {event.User?.name || 'Unknown'}</span>
+            </div>
+          )}
+          <p className='mt-4'>{event.description}</p>
+        </div>
+
+        {/* Map */}
+        {event.latitude && event.longitude && (
+          <div className='mb-6 h-64'>
+            <MapContainer
+              center={[event.latitude, event.longitude]}
+              zoom={13}
+              style={{ height: '100%', width: '100%' }}
+            >
+              <TileLayer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' />
+              <Marker position={[event.latitude, event.longitude]}>
+                <Popup>{event.title}</Popup>
+              </Marker>
+            </MapContainer>
           </div>
         )}
-        <p className='mt-4'>{event.description}</p>
-      </div>
 
-      {/* Map */}
-      {event.latitude && event.longitude && (
-        <div className='mb-6 h-64'>
-          <MapContainer
-            center={[event.latitude, event.longitude]}
-            zoom={13}
-            style={{ height: '100%', width: '100%' }}
-          >
-            <TileLayer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' />
-            <Marker position={[event.latitude, event.longitude]}>
-              <Popup>{event.title}</Popup>
-            </Marker>
-          </MapContainer>
-        </div>
-      )}
-
-      <div className='flex gap-4'>
-        {event.source === 'local' && (
-          <button
-            onClick={() => navigate(`/events/edit/${event.id}`)}
-            className='btn btn-primary flex-1'
-          >
-            Edit Event
+        <div className='flex gap-4'>
+          {event.source === 'local' && (
+            <button
+              onClick={() => navigate(`/events/edit/${event.id}`)}
+              className='btn btn-primary flex-1'
+            >
+              Edit Event
+            </button>
+          )}
+          <button onClick={handleDelete} className='btn btn-error flex-1'>
+            Delete Event
           </button>
-        )}
-        <button onClick={handleDelete} className='btn btn-error flex-1'>
-          Delete Event
-        </button>
+        </div>
       </div>
     </div>
   );
