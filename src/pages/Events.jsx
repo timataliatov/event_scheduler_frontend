@@ -15,7 +15,19 @@ const Events = () => {
     try {
       setLoading(true);
       const response = await getEvents();
-      setEvents(response.results);
+      const apiEvents = response.results.map(event => ({ ...event, source: 'api' }));
+
+      // Fetch events from localStorage
+      const localEvents = JSON.parse(localStorage.getItem('events') || '[]')
+        .map(event => ({ ...event, source: 'local' }));
+
+      // Combine API events and localStorage events
+      const allEvents = [...apiEvents, ...localEvents];
+
+      // Sort events by date (closest first)
+      const sortedEvents = allEvents.sort((a, b) => new Date(a.date) - new Date(b.date));
+
+      setEvents(sortedEvents);
       setLoading(false);
     } catch (err) {
       setError('Failed to fetch events');
