@@ -31,7 +31,7 @@ const Login = () => {
       <div className='max-w-md w-full mx-auto px-6'>
         <div className='bg-base-200 shadow-xl rounded-lg p-8 sm:p-10'>
           <h2 className='text-2xl sm:text-3xl font-bold mb-6 text-center'>Welcome Back</h2>
-          {error && <p className="text-error text-center mb-6">{error}</p>}
+          {error && <p className='text-error text-center mb-6'>{error}</p>}
           <form onSubmit={handleSubmit} className='space-y-6'>
             <div>
               <label htmlFor='email' className='block text-sm font-medium mb-2'>
@@ -66,7 +66,7 @@ const Login = () => {
               </div>
             </div>
             <div>
-              <button type="submit" className='btn btn-primary w-full'>
+              <button type='submit' className='btn btn-primary w-full'>
                 Log In
               </button>
             </div>
@@ -74,7 +74,7 @@ const Login = () => {
           <div className='mt-6 text-center'>
             <p className='text-sm'>
               Don&apos;t have an account?{' '}
-              <Link to="/register" className='text-primary hover:underline'>
+              <Link to='/register' className='text-primary hover:underline'>
                 Sign up
               </Link>
             </p>

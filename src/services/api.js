@@ -21,8 +21,7 @@ apiService.interceptors.request.use(
 );
 
 export const login = (email, password) => apiService.post('/auth/login', { email, password });
-export const register = (email, password) =>
-  apiService.post('/users', { email, password });
+export const register = (email, password) => apiService.post('/users', { email, password });
 export const getProfile = () => apiService.get('/auth/profile');
 
 export const getEvents = async (page = 1, limit = 100) => {
@@ -35,7 +34,15 @@ export const getEvents = async (page = 1, limit = 100) => {
   }
 };
 export const getEventById = (id) => apiService.get(`/events/${id}`);
-export const createEvent = (eventData) => apiService.post('/events', eventData);
+export const createEvent = async (eventData) => {
+  try {
+    const response = await apiService.post('/events', eventData);
+    return response.data;
+  } catch (error) {
+    console.error('Error creating event:', error);
+    throw error;
+  }
+};
 export const updateEvent = (id, eventData) => apiService.put(`/events/${id}`, eventData);
 export const deleteEvent = (id) => apiService.delete(`/events/${id}`);
 export const getUpcomingEvents = () => apiService.get('/events/upcoming');

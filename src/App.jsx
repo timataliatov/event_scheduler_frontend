@@ -5,6 +5,7 @@ import MainLayout from './layouts/MainLayout';
 import Home from './pages/Home';
 import EventDetail from './components/EventDetail';
 import CreateEvent from './components/CreateEvent';
+import EditEvent from './components/EditEvent';
 import Login from './components/Login';
 import Register from './components/Register';
 import UserProfile from './components/UserProfile';
@@ -27,6 +28,7 @@ const App = () => {
 
             <Route element={<ProtectedRoute />}>
               <Route path='/events/create' element={<CreateEvent />} />
+              <Route path='/events/edit/:id' element={<EditEvent />} />
               <Route path='/profile' element={<UserProfile />} />
               <Route path='/get-pro' element={<GetPro />} />
               <Route path='/settings' element={<Settings />} />
