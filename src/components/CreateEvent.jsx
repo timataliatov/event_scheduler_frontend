@@ -90,52 +90,54 @@ const CreateEvent = () => {
   };
 
   return (
-    <div className='max-w-2xl mx-auto'>
-      <h1 className='text-3xl font-bold mb-6'>Create New Event</h1>
-      <form onSubmit={handleSubmit} className='space-y-4'>
-        <div>
-          <label className='label' htmlFor='title'>
-            <span className='label-text'>Title</span>
-          </label>
-          <input
-            type='text'
-            id='title'
-            name='title'
-            value={formData.title}
-            onChange={handleInputChange}
-            className='input input-bordered w-full'
-            required
-          />
+    <div className='container mx-auto px-4 py-8'>
+      <h1 className='text-4xl font-bold mb-8 text-center'>Create New Event</h1>
+      <form onSubmit={handleSubmit} className='space-y-6 max-w-4xl mx-auto'>
+        <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
+          <div>
+            <label className='label' htmlFor='title'>
+              <span className='label-text text-lg'>Title</span>
+            </label>
+            <input
+              type='text'
+              id='title'
+              name='title'
+              value={formData.title}
+              onChange={handleInputChange}
+              className='input input-bordered w-full text-lg'
+              required
+            />
+          </div>
+          <div>
+            <label className='label' htmlFor='date'>
+              <span className='label-text text-lg'>Date</span>
+            </label>
+            <input
+              type='datetime-local'
+              id='date'
+              name='date'
+              value={formData.date}
+              onChange={handleInputChange}
+              className='input input-bordered w-full text-lg'
+              required
+            />
+          </div>
         </div>
         <div>
           <label className='label' htmlFor='description'>
-            <span className='label-text'>Description</span>
+            <span className='label-text text-lg'>Description</span>
           </label>
           <textarea
             id='description'
             name='description'
             value={formData.description}
             onChange={handleInputChange}
-            className='textarea textarea-bordered w-full h-24'
+            className='textarea textarea-bordered w-full h-32 text-lg'
           ></textarea>
-        </div>
-        <div>
-          <label className='label' htmlFor='date'>
-            <span className='label-text'>Date</span>
-          </label>
-          <input
-            type='datetime-local'
-            id='date'
-            name='date'
-            value={formData.date}
-            onChange={handleInputChange}
-            className='input input-bordered w-full'
-            required
-          />
         </div>
         <div className='relative'>
           <label className='label' htmlFor='location'>
-            <span className='label-text'>Location</span>
+            <span className='label-text text-lg'>Location</span>
           </label>
           <input
             type='text'
@@ -143,7 +145,7 @@ const CreateEvent = () => {
             name='location'
             value={formData.location}
             onChange={handleInputChange}
-            className='input input-bordered w-full'
+            className='input input-bordered w-full text-lg'
             required
           />
           {suggestions.length > 0 && (
@@ -151,7 +153,7 @@ const CreateEvent = () => {
               {suggestions.map((suggestion) => (
                 <li
                   key={suggestion.place_id}
-                  className='p-2 hover:bg-base-200 cursor-pointer'
+                  className='p-3 hover:bg-base-200 cursor-pointer text-lg'
                   onClick={() => handleSuggestionClick(suggestion)}
                 >
                   {suggestion.display_name}
@@ -160,7 +162,7 @@ const CreateEvent = () => {
             </ul>
           )}
         </div>
-        <div className='relative h-64 w-full mb-4'>
+        <div className='h-96 w-full mb-6'>
           <MapContainer
             center={mapCenter}
             zoom={mapZoom}
@@ -174,7 +176,7 @@ const CreateEvent = () => {
             <MapView />
           </MapContainer>
         </div>
-        <button type='submit' className='btn btn-primary w-full'>
+        <button type='submit' className='btn btn-primary w-full text-lg py-3'>
           Create Event
         </button>
       </form>
