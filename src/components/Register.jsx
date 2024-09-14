@@ -28,7 +28,7 @@ const Register = () => {
       <div className='max-w-md w-full mx-auto px-6'>
         <div className='bg-base-200 shadow-xl rounded-lg p-8 sm:p-10'>
           <h2 className='text-2xl sm:text-3xl font-bold mb-6 text-center'>Create an Account</h2>
-          {error && <p className="text-error text-center mb-6">{error}</p>}
+          {error && <p className='text-error text-center mb-6'>{error}</p>}
           <form onSubmit={handleSubmit} className='space-y-6'>
             <div>
               <label htmlFor='email' className='block text-sm font-medium mb-2'>
@@ -63,7 +63,7 @@ const Register = () => {
               </div>
             </div>
             <div>
-              <button type="submit" className='btn btn-primary w-full'>
+              <button type='submit' className='btn btn-primary w-full'>
                 Sign Up
               </button>
             </div>
@@ -71,7 +71,7 @@ const Register = () => {
           <div className='mt-6 text-center'>
             <p className='text-sm'>
               Already have an account?{' '}
-              <Link to="/login" className='text-primary hover:underline'>
+              <Link to='/login' className='text-primary hover:underline'>
                 Log in
               </Link>
             </p>
