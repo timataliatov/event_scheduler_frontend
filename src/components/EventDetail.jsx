@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getEventById, deleteEvent } from '../services/api';
+import { getEventById } from '../services/api';
 import { Calendar, MapPin, Clock, User } from 'lucide-react';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
 
 const EventDetail = () => {
   const [event, setEvent] = useState(null);
@@ -11,28 +13,45 @@ const EventDetail = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    const fetchEvent = async () => {
+      try {
+        setLoading(true);
+        // First, check localStorage
+        const localEvents = JSON.parse(localStorage.getItem('events') || '[]');
+        const localEvent = localEvents.find((e) => e.id.toString() === id);
+
+        if (localEvent) {
+          setEvent({ ...localEvent, source: 'local' });
+        } else {
+          // If not in localStorage, fetch from API
+          const response = await getEventById(id);
+          setEvent({ ...response.data, source: 'api' });
+        }
+        setLoading(false);
+      } catch (err) {
+        setError('Failed to fetch event details');
+        setLoading(false);
+      }
+    };
+
     fetchEvent();
   }, [id]);
 
-  const fetchEvent = async () => {
-    try {
-      setLoading(true);
-      const response = await getEventById(id);
-      setEvent(response.data);
-      setLoading(false);
-    } catch (err) {
-      setError('Failed to fetch event details');
-      setLoading(false);
-    }
-  };
-
   const handleDelete = async () => {
     if (window.confirm('Are you sure you want to delete this event?')) {
-      try {
-        await deleteEvent(id);
+      if (event.source === 'local') {
+        const localEvents = JSON.parse(localStorage.getItem('events') || '[]');
+        const updatedEvents = localEvents.filter((e) => e.id.toString() !== id);
+        localStorage.setItem('events', JSON.stringify(updatedEvents));
         navigate('/events');
-      } catch (err) {
-        setError('Failed to delete event');
+      } else {
+        try {
+          // Implement API delete call here
+          // await deleteEvent(id);
+          navigate('/events');
+        } catch (err) {
+          setError('Failed to delete event');
+        }
       }
     }
   };
@@ -57,19 +76,40 @@ const EventDetail = () => {
           <MapPin className='mr-2' />
           <span>{event.location}</span>
         </div>
-        <div className='flex items-center mb-4'>
-          <User className='mr-2' />
-          <span>Organizer: {event.User?.name || 'Unknown'}</span>
-        </div>
+        {event.source === 'api' && (
+          <div className='flex items-center mb-4'>
+            <User className='mr-2' />
+            <span>Organizer: {event.User?.name || 'Unknown'}</span>
+          </div>
+        )}
         <p className='mt-4'>{event.description}</p>
       </div>
+
+      {/* Map */}
+      {event.latitude && event.longitude && (
+        <div className='mb-6 h-64'>
+          <MapContainer
+            center={[event.latitude, event.longitude]}
+            zoom={13}
+            style={{ height: '100%', width: '100%' }}
+          >
+            <TileLayer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' />
+            <Marker position={[event.latitude, event.longitude]}>
+              <Popup>{event.title}</Popup>
+            </Marker>
+          </MapContainer>
+        </div>
+      )}
+
       <div className='flex gap-4'>
-        <button
-          onClick={() => navigate(`/events/edit/${event.id}`)}
-          className='btn btn-primary flex-1'
-        >
-          Edit Event
-        </button>
+        {event.source === 'local' && (
+          <button
+            onClick={() => navigate(`/events/edit/${event.id}`)}
+            className='btn btn-primary flex-1'
+          >
+            Edit Event
+          </button>
+        )}
         <button onClick={handleDelete} className='btn btn-error flex-1'>
           Delete Event
         </button>
