@@ -9,6 +9,7 @@ const Events = () => {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [filteredEvents, setFilteredEvents] = useState([]);
 
   const fetchEvents = useCallback(async () => {
     try {
@@ -26,6 +27,26 @@ const Events = () => {
     fetchEvents();
   }, [fetchEvents]);
 
+  const applyFilter = (startDate, endDate, location) => {
+    const newFilteredEvents = events.filter((event) => {
+      const eventDate = new Date(event.date).toISOString().split('T')[0];
+      return (
+        (!startDate || eventDate >= startDate) &&
+        (!endDate || eventDate <= endDate) &&
+        (!location || event.location.toLowerCase().includes(location.toLowerCase()))
+      );
+    });
+    setFilteredEvents(newFilteredEvents);
+  }
+  const applySearch = (query) => {
+    const newFilteredEvents = events.filter(
+      (event) =>
+        event.title.toLowerCase().includes(query.toLowerCase()) ||
+        event.description.toLowerCase().includes(query.toLowerCase()),
+    );
+    setFilteredEvents(newFilteredEvents);
+  }
+
   if (loading) return <div className='text-center text-gray-600'>Loading...</div>;
   if (error) return <div className='text-center text-red-500'>{error}</div>;
 
@@ -33,13 +54,13 @@ const Events = () => {
     <div className='container mx-auto px-4 py-8'>
       <h1 className='text-3xl font-bold mb-8'>Upcoming Events</h1>
       <div className='mb-8'>
-        <SearchBar events={events} setEvents={setEvents} />
+        <SearchBar applySearch={applySearch} setFilteredEvents={setFilteredEvents} />
       </div>
       <div className='mb-8 h-96'>
-        <EventMap events={events} />
+        <EventMap events={events} filteredEvents={filteredEvents} />
       </div>
-      <FilterOptions events={events} setEvents={setEvents} />
-      <EventList events={events} />
+      <FilterOptions applyFilter={applyFilter} setFilteredEvents={setFilteredEvents} />
+      <EventList events={events} filteredEvents={filteredEvents} />
     </div>
   );
 };

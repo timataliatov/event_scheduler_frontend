@@ -1,31 +1,17 @@
 import { useState, useEffect } from 'react';
 import { Search, X } from 'lucide-react';
 
-const SearchBar = ({ events, setEvents }) => {
+const SearchBar = ({ applySearch, setFilteredEvents }) => {
   const [query, setQuery] = useState('');
-  const [initialEvents, setInitialEvents] = useState([]);
-
-  useEffect(() => {
-    setInitialEvents(events);
-  }, []);
-
+  
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (query.length > 0) {
-      const filtered = events.filter(
-        (event) =>
-          event.title.toLowerCase().includes(query.toLowerCase()) ||
-          event.description.toLowerCase().includes(query.toLowerCase()),
-      );
-      setEvents(filtered);
-    } else {
-      setEvents(initialEvents);
-    }
+    applySearch(query);
   };
 
   const clearSearch = () => {
     setQuery('');
-    setEvents(initialEvents);
+    setFilteredEvents([]);
   };
 
   return (
