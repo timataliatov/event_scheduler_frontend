@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import axios from 'axios';
+import { createEvent } from '../services/api';
 
 const CreateEvent = () => {
   const [formData, setFormData] = useState({
@@ -74,10 +75,8 @@ const CreateEvent = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const events = JSON.parse(localStorage.getItem('events') || '[]');
-    const newEvent = { ...formData, id: Date.now() };
-    events.push(newEvent);
-    localStorage.setItem('events', JSON.stringify(events));
+    const newEvent = { ...formData};
+    createEvent(newEvent);
     navigate('/events');
   };
 
