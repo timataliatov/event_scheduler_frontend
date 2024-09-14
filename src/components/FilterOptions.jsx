@@ -7,19 +7,20 @@ const FilterOptions = ({ applyFilter, setFilteredEvents }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    applyFilter(startDate,endDate,location);
+    applyFilter(startDate, endDate, location);
   };
 
- const clearFilters = () => {
-  setStartDate('');
-  setEndDate('');
-  setLocation('');
-  setFilteredEvents([]);
- }
+  const clearFilters = () => {
+    setStartDate('');
+    setEndDate('');
+    setLocation('');
+    setFilteredEvents([]);
+    applyFilter('', '', '');
+  };
 
   return (
     <form onSubmit={handleSubmit} className='space-y-4 mt-4'>
-      <div className='flex flex-col-2 flex-wrap items-center justify-center gap-4 pb-10'>
+      <div className='flex flex-col md:flex-row items-center justify-center gap-4 pb-10'>
         <div className='flex gap-4'>
           <input
             type='date'
@@ -44,12 +45,16 @@ const FilterOptions = ({ applyFilter, setFilteredEvents }) => {
             className='input input-bordered w-80'
             placeholder='Location'
           />
-          <button type='submit' className='btn btn-secondary w-16'>
+          <button type='submit' className='btn btn-secondary w-24'>
             Filter
           </button>
-          {(startDate || endDate || location) && <button onClick={clearFilters} className='btn btn-secondary w-16'>
-            Clear
-          </button>}
+          <button
+            type='button'
+            onClick={clearFilters}
+            className='btn btn-outline btn-secondary w-24'
+          >
+            Reset
+          </button>
         </div>
       </div>
     </form>

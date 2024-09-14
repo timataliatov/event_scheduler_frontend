@@ -5,6 +5,11 @@ import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import axios from 'axios';
 import { createEvent } from '../services/api';
+import imageCompression from 'browser-image-compression';
+import { useAuth } from '../context/AuthContext';
+
+const defaultEventImage =
+  'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80';
 
 const CreateEvent = () => {
   const [formData, setFormData] = useState({
@@ -14,12 +19,15 @@ const CreateEvent = () => {
     location: '',
     latitude: null,
     longitude: null,
+    posterUrl: '',
   });
   const [suggestions, setSuggestions] = useState([]);
   const [mapCenter, setMapCenter] = useState([0, 0]);
   const [mapZoom, setMapZoom] = useState(2);
   const navigate = useNavigate();
   const mapRef = useRef();
+  const [previewImage, setPreviewImage] = useState(null);
+  const { user } = useAuth();
 
   useEffect(() => {
     // Dynamically import Leaflet images
@@ -73,11 +81,41 @@ const CreateEvent = () => {
     setSuggestions([]);
   };
 
-  const handleSubmit = (e) => {
+  const handleFileChange = async (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      try {
+        const options = {
+          maxSizeMB: 3,
+          maxWidthOrHeight: 1920,
+          useWebWorker: true,
+        };
+        const compressedFile = await imageCompression(file, options);
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          const base64String = reader.result;
+          setPreviewImage(base64String);
+          setFormData((prev) => ({ ...prev, posterUrl: base64String }));
+        };
+        reader.readAsDataURL(compressedFile);
+      } catch (error) {
+        console.error('Error compressing image:', error);
+      }
+    }
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const newEvent = { ...formData};
-    createEvent(newEvent);
-    navigate('/events');
+    const newEvent = { ...formData, organizerId: user.id };
+    if (!newEvent.posterUrl) {
+      newEvent.posterUrl = defaultEventImage;
+    }
+    try {
+      await createEvent(newEvent);
+      navigate('/events');
+    } catch (error) {
+      console.error('Error creating event:', error);
+    }
   };
 
   const MapView = () => {
@@ -174,6 +212,24 @@ const CreateEvent = () => {
             )}
             <MapView />
           </MapContainer>
+        </div>
+        <div>
+          <label className='label' htmlFor='poster'>
+            <span className='label-text text-lg'>Event Poster</span>
+          </label>
+          <input
+            type='file'
+            id='poster'
+            name='poster'
+            onChange={handleFileChange}
+            className='file-input file-input-bordered w-full'
+            accept='image/*'
+          />
+          {previewImage && (
+            <div className='mt-4'>
+              <img src={previewImage} alt='Event poster preview' className='max-w-xs mx-auto' />
+            </div>
+          )}
         </div>
         <button type='submit' className='btn btn-primary w-full text-lg py-3'>
           Create Event
