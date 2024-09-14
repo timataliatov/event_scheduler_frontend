@@ -1,42 +1,32 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { getEvents } from '../services/api';
 import EventList from '../components/EventList';
 import SearchBar from '../components/SearchBar';
 import EventMap from '../components/EventMap';
+import FilterOptions from '../components/FilterOptions';
 
 const Events = () => {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [page, setPage] = useState(1);
-  const [hasMore, setHasMore] = useState(true);
 
-  useEffect(() => {
-    fetchEvents();
-  }, [page]);
-
-  const fetchEvents = async () => {
+  const fetchEvents = useCallback(async () => {
     try {
       setLoading(true);
-      const response = await getEvents(page, 10);
-      setEvents((prevEvents) =>
-        page === 1 ? response.data.results : [...prevEvents, ...response.data.results],
-      );
-      setHasMore(response.data.hasNextPage);
+      const response = await getEvents();
+      setEvents(response.results);
       setLoading(false);
     } catch (err) {
       setError('Failed to fetch events');
       setLoading(false);
     }
-  };
+  }, []);
 
-  const loadMore = () => {
-    if (hasMore) {
-      setPage((prevPage) => prevPage + 1);
-    }
-  };
+  useEffect(() => {
+    fetchEvents();
+  }, [fetchEvents]);
 
-  if (loading && page === 1) return <div className='text-center text-gray-600'>Loading...</div>;
+  if (loading) return <div className='text-center text-gray-600'>Loading...</div>;
   if (error) return <div className='text-center text-red-500'>{error}</div>;
 
   return (
@@ -45,18 +35,11 @@ const Events = () => {
       <div className='mb-8'>
         <SearchBar events={events} setEvents={setEvents} />
       </div>
-      <div className='map-container'>
+      <div className='mb-8 h-96'>
         <EventMap events={events} />
       </div>
-      {/* <FilterOptions /> */}
+      <FilterOptions events={events} setEvents={setEvents} />
       <EventList events={events} />
-      {hasMore && (
-        <div className='text-center mt-8'>
-          <button onClick={loadMore} className='btn btn-primary'>
-            {loading ? 'Loading...' : 'Load More'}
-          </button>
-        </div>
-      )}
     </div>
   );
 };
