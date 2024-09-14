@@ -35,23 +35,23 @@ const Home = () => {
             </Link>
           )}
         </div>
-        <div className="mt-24">
-          <h2 className="text-2xl md:text-3xl font-semibold mb-12 text-primary">Why Choose Eventify?</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+        <div className="mt-16">
+          <h2 className="text-xl md:text-2xl font-semibold mb-8 text-primary">Why Choose Eventify?</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
             <FeatureCard
               icon={FaSearch}
               title="Discover Events"
-              description="Find exciting events happening near you with our advanced search system."
+              description="Find exciting nearby events easily."
             />
             <FeatureCard
               icon={FaPencilAlt}
               title="Create & Manage"
-              description="Easily create and manage your own events with intuitive tools."
+              description="Intuitive tools for event organization."
             />
             <FeatureCard
               icon={FaUsers}
               title="Connect"
-              description="Network with like-minded event enthusiasts and grow your circle."
+              description="Network with event enthusiasts."
             />
           </div>
         </div>
@@ -61,12 +61,12 @@ const Home = () => {
 };
 
 const FeatureCard = ({ icon: Icon, title, description }) => (
-  <div className="bg-base-200 p-8 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl hover:scale-102 flex flex-col items-center group">
-    <div className="bg-primary text-primary-content p-4 rounded-full mb-6 transition-transform duration-300 group-hover:scale-110">
-      <Icon className="text-2xl" />
+  <div className="bg-base-200 p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl hover:scale-102 flex flex-col items-center group">
+    <div className="bg-primary text-primary-content p-3 rounded-full mb-4 transition-transform duration-300 group-hover:scale-110">
+      <Icon className="text-xl" />
     </div>
-    <h3 className="text-xl font-semibold mb-4 group-hover:text-primary transition-colors duration-300">{title}</h3>
-    <p className="text-base-content/70 text-center">{description}</p>
+    <h3 className="text-lg font-semibold mb-2 group-hover:text-primary transition-colors duration-300">{title}</h3>
+    <p className="text-base-content/70 text-center text-sm">{description}</p>
   </div>
 );
 
