@@ -1,15 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import ThemeSwitcher from './ThemeSwitcher';
+import UserDropdown from './UserDropdown';
+import { useAuth } from '../context/AuthContext';
 
 const Header = () => {
+  const { isAuthenticated } = useAuth();
+
   return (
-    <header className='bg-base-100 text-base-content border-b border-base-300'>
-      <div className='container mx-auto px-4'>
+    <header className='bg-base-100 text-base-content border-b border-base-300 shadow-sm'>
+      <div className='container mx-auto px-4 sm:px-6 lg:px-8'>
         <nav className='flex items-center justify-between py-4'>
-          <Link to='/' className='text-2xl font-bold'>
-          <a href='/'>
-            <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 380 170' width='180' height='85'>
+          <Link to='/' className='flex-shrink-0'>
+            <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 380 170' width='160' height='75' className='transition-transform duration-300 ease-in-out transform hover:scale-105'>
               <path
                 d='M10 100 Q 100 10, 190 100 T 380 100'
                 strokeWidth='20'
@@ -27,34 +30,36 @@ const Header = () => {
                 eventify.me
               </text>
             </svg>
-          </a>
           </Link>
-          <ul className='flex items-center space-x-6'>
+          <ul className='flex items-center space-x-1 sm:space-x-2 md:space-x-4'>
             <li>
-              <Link to='/events' className='hover:text-primary transition-colors'>
+              <Link to='/events' className='btn btn-ghost btn-sm rounded-btn text-[15px]'>
                 Events
               </Link>
             </li>
             <li>
-              <Link to='/events/create' className='hover:text-primary transition-colors'>
+              <Link to='/events/create' className='btn btn-ghost btn-sm rounded-btn text-[15px]'>
                 Create Event
               </Link>
             </li>
-            <li>
-              <Link to='/profile' className='hover:text-primary transition-colors'>
-                Profile
-              </Link>
-            </li>
-            <li>
-              <Link to='/login' className='hover:text-primary transition-colors'>
-                Login
-              </Link>
-            </li>
-            <li>
-              <Link to='/register' className='hover:text-primary transition-colors'>
-                Register
-              </Link>
-            </li>
+            {isAuthenticated ? (
+              <li>
+                <UserDropdown />
+              </li>
+            ) : (
+              <>
+                <li>
+                  <Link to='/login' className='btn btn-ghost btn-sm rounded-btn'>
+                    Login
+                  </Link>
+                </li>
+                <li>
+                  <Link to='/register' className='btn btn-primary btn-sm rounded-btn'>
+                    Register
+                  </Link>
+                </li>
+              </>
+            )}
             <li>
               <ThemeSwitcher />
             </li>

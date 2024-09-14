@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { login } from '../services/api';
+import { login as apiLogin } from '../services/api';
+import { useAuth } from '../context/AuthContext';
 
 const Login = () => {
   // State for form data and error handling
@@ -10,6 +11,7 @@ const Login = () => {
   });
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   // Update state when input changes
   const handleChange = (e) => {
@@ -22,9 +24,9 @@ const Login = () => {
     setError('');
     try {
       // Send login request to API
-      const response = await login(formData.email, formData.password);
+      const response = await apiLogin(formData.email, formData.password);
       // Store token in localStorage
-      localStorage.setItem('token', response.data.token);
+      login(response.data.token);
       // Navigate to home page after successful login
       navigate('/');
     } catch (err) {
