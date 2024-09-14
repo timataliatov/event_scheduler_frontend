@@ -64,22 +64,22 @@ const EventDetail = () => {
     <div className='flex-grow flex items-center justify-center py-8'>
       <div className='max-w-2xl w-full mx-auto px-4'>
         <h1 className='text-3xl font-bold mb-6'>{event.title}</h1>
-        <div className='bg-white shadow-md rounded-lg p-6 mb-6'>
+        <div className='bg-base-200 border border-base-300 shadow-md rounded-lg p-6 mb-6'>
           <div className='flex items-center mb-4'>
-            <Calendar className='mr-2' />
+            <Calendar className='mr-2 text-primary' />
             <span>{new Date(event.date).toLocaleDateString()}</span>
           </div>
           <div className='flex items-center mb-4'>
-            <Clock className='mr-2' />
+            <Clock className='mr-2 text-primary' />
             <span>{new Date(event.date).toLocaleTimeString()}</span>
           </div>
           <div className='flex items-center mb-4'>
-            <MapPin className='mr-2' />
+            <MapPin className='mr-2 text-primary' />
             <span>{event.location}</span>
           </div>
           {event.source === 'api' && (
             <div className='flex items-center mb-4'>
-              <User className='mr-2' />
+              <User className='mr-2 text-primary' />
               <span>Organizer: {event.User?.name || 'Unknown'}</span>
             </div>
           )}
